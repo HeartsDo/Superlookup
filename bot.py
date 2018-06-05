@@ -23,18 +23,6 @@ async def on_ready():
     game = discord.Game(name="Look the user with .look")
     await bot.change_presence(status=discord.Status.idle, game=game)
 
-async def background_loop():
-  await bot.wait_until_ready()
-  while not bot.is_closed:
-    hostname = "google.fr" #example
-    response = os.system("ping -c 1 " + hostname)
-    #and then check the response...
-    if response == 0:
-      print(hostname, 'is up!')
-    else:
-      print(hostname, 'is down!')
-    await asyncio.sleep(240)
-
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
@@ -85,5 +73,4 @@ async def help():
     embed.add_field(name=".help", value="Gives this message", inline=False)
     await bot.say(embed=embed)
 
-bot.loop.create_task(background_loop())
 bot.run(token)
