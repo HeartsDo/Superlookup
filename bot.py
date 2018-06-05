@@ -47,7 +47,7 @@ async def look(ctx, user: discord.Member):
     edit = await bot.say(':mag: Lookup in progress for: ' + str(user.id))
     await bot.send_typing(ctx.message.author)
     embed = discord.Embed(title="ID: " + str(user.id), color=0x44b57c)
-    embed.set_author(name="Lookup of " + user.name,icon_url=user.avatar_url) 
+    embed.set_author(name="Lookup of " + user.name + str(user.discriminator),icon_url=user.avatar_url) 
     embed.add_field(name="Created the:", value=user.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
     embed.add_field(name="Joined the guild the:", value=user.joined_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
     role_names = [role.name for role in user.roles]
