@@ -13,7 +13,7 @@ start_time = time.time()
 bot = commands.Bot(command_prefix='.')
 token = data['token']
 
-
+# Bot ready
 @bot.event
 async def on_ready():
     print('Logged in as')
@@ -23,12 +23,13 @@ async def on_ready():
     game = discord.Game(name="Look the user with .look")
     await bot.change_presence(status=discord.Status.idle, game=game)
 
+# Error gestion
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
         await bot.send_message(ctx.message.channel, "It seems you are missing required argument(s). Try again if you have all the arguments needed.") 
 
-
+# Bot commands
 @bot.command(pass_context=True)
 async def look(ctx, user: discord.Member):
     """ Launch a lookup """
@@ -73,4 +74,5 @@ async def help():
     embed.add_field(name=".help", value="Gives this message", inline=False)
     await bot.say(embed=embed)
 
+# Bot run
 bot.run(token)
