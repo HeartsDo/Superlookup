@@ -19,7 +19,7 @@ async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
-    print('------')
+    print('--------')
     game = discord.Game(name="Look the user with .look")
     await bot.change_presence(status=discord.Status.idle, game=game)
 
