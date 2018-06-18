@@ -9,13 +9,11 @@ START_TIME = time.time()
 BOT = commands.Bot(command_prefix='.')
 TOKEN = DATA['token']
 
-<<<<<<< HEAD
 
-@BOT.event
-=======
+
+
 # Bot ready
-@bot.event
->>>>>>> d76e0039d3b6cdde7b0b5350dc7cd45dc5aa1603
+@BOT.event
 async def on_ready():
     print('Logged in as')
     print(BOT.user.name)
@@ -24,23 +22,16 @@ async def on_ready():
     game = discord.Game(name="Look the user with .look")
     await BOT.change_presence(status=discord.Status.idle, game=game)
 
-<<<<<<< HEAD
-@BOT.event
-=======
 # Error gestion
-@bot.event
->>>>>>> d76e0039d3b6cdde7b0b5350dc7cd45dc5aa1603
+@BOT.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
         await BOT.send_message(ctx.message.channel, "It seems you are missing required argument(s). Try again if you have all the arguments needed.")
 
-<<<<<<< HEAD
 
-@BOT.command(pass_context=True)
-=======
+
 # Bot commands
-@bot.command(pass_context=True)
->>>>>>> d76e0039d3b6cdde7b0b5350dc7cd45dc5aa1603
+@BOT.command(pass_context=True)
 async def look(ctx, user: discord.Member):
     """ Launch a lookup """
     edit = await BOT.say(':mag: Lookup in progress for: ' + str(user.id))
@@ -84,10 +75,6 @@ async def help():
     embed.add_field(name=".help", value="Gives this message", inline=False)
     await BOT.say(embed=embed)
 
+# Bot run
 BOT.run(TOKEN)
 
-<<<<<<< HEAD
-=======
-# Bot run
-bot.run(token)
->>>>>>> d76e0039d3b6cdde7b0b5350dc7cd45dc5aa1603
