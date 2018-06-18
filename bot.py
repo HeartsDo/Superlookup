@@ -10,21 +10,19 @@ BOT = commands.Bot(command_prefix='.')
 TOKEN = DATA['token']
 
 
-
-
 # Bot ready
 @BOT.event
 async def on_ready():
     print('Logged in as')
     print(BOT.user.name)
     print(BOT.user.id)
-    print('------')
+    print('--------------')
     game = discord.Game(name="Look the user with .look")
     await BOT.change_presence(status=discord.Status.idle, game=game)
 
 # Error gestion
 @BOT.event
-async def on_command_error(error, ctx):
+async def on_command_error(error, ctx)dqsdqs:
     if isinstance(error, commands.MissingRequiredArgument):
         await BOT.send_message(ctx.message.channel, "It seems you are missing required argument(s). Try again if you have all the arguments needed.")
 
