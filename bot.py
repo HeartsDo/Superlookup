@@ -10,15 +10,13 @@ BOT = commands.Bot(command_prefix='.')
 TOKEN = DATA['token']
 
 
-
-
 # Bot ready
 @BOT.event
 async def on_ready():
     print('Logged in as')
     print(BOT.user.name)
     print(BOT.user.id)
-    print('------')
+    print('--------------')
     game = discord.Game(name="Look the user with .look")
     await BOT.change_presence(status=discord.Status.idle, game=game)
 
