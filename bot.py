@@ -3,6 +3,9 @@ import json
 import discord
 from discord.ext import commands
 
+with open('./config.json', 'r') as fichier:
+    data = json.load(fichier)
+
 start_time = time.time()
 bot = commands.Bot(command_prefix='.')
 token = data['token']
@@ -51,7 +54,7 @@ async def look(ctx, user: discord.Member):
     else:
         embed.add_field(name="Is BOT ?:", value="No", inline=True)
     embed.set_footer(text="Superlookup version 1.0, by HeartsDo#0530")
-    await ctx.edit(":white_check_mark: Done:")
+    await ctx.send(":white_check_mark: Done:")
     await ctx.send(embed=embed)
 
 @bot.command()
@@ -60,7 +63,7 @@ async def info(ctx):
     """ Show Info of the bot """
     embed = discord.Embed(title="Version: 1", color=0x44b57c)
     embed.set_author(name="BOT created by HeartsDo#0530", icon_url="https://cdn.discordapp.com/avatars/140913931668553728/a993b5f3aa162d05927d8b3c88a98ef0.png")
-    second = time.time() - START_TIME
+    second = time.time() - start_time
     minute, second = divmod(second, 60)
     hour, minute = divmod(minute, 60)
     day, hour = divmod(hour, 24)
@@ -68,7 +71,7 @@ async def info(ctx):
     embed.add_field(name="Uptime:", value=str(int(week)) + " weeks, " + str(int(day)) + " days, " + str(int(hour)) + " hours, " + str(int(minute)) + " minutes, " + str(int(second)) + " seconds")
     await ctx.send(embed=embed)
 
-BOT.remove_command("help")
+bot.remove_command("help")
 
 @bot.command()
 @is_not_bot()
@@ -81,3 +84,4 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
+bot.run(token)
