@@ -49,7 +49,7 @@ async def look(ctx, user: discord.Member):
     role_names = [role.name for role in user.roles]
     embed.add_field(name="Roles:", value=role_names, inline=False)
     embed.add_field(name="Nickname on server:", value=user.display_name, inline=True)
-    if user.BOT is True:
+    if user.bot is True:
         embed.add_field(name="Is BOT ?:", value="Yes", inline=True)
     else:
         embed.add_field(name="Is BOT ?:", value="No", inline=True)
@@ -62,7 +62,7 @@ async def look(ctx, user: discord.Member):
 async def info(ctx):
     """ Show Info of the bot """
     embed = discord.Embed(title="Version: 1", color=0x44b57c)
-    embed.set_author(name="BOT created by HeartsDo#0530", icon_url="https://cdn.discordapp.com/avatars/140913931668553728/a993b5f3aa162d05927d8b3c88a98ef0.png")
+    embed.set_author(name="Bot created by HeartsDo#0530", icon_url="https://cdn.discordapp.com/avatars/140913931668553728/a993b5f3aa162d05927d8b3c88a98ef0.png")
     second = time.time() - start_time
     minute, second = divmod(second, 60)
     hour, minute = divmod(minute, 60)
