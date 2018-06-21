@@ -12,6 +12,7 @@ with open('./config.json', 'r') as fichier:
 start_time = time.time()
 bot = commands.Bot(command_prefix='.')
 token = data['token']
+client = discord.Client
 
 
 @bot.event
@@ -20,20 +21,29 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    game = discord.Game(name="Look the user with .look")
-    await bot.change_presence(status=discord.Status.idle, game=game)
+    game = discord.Game("Look the user with .look")
+    await bot.change_presence(status=discord.Status.idle, activity=game)
 
 @bot.event
 async def on_command_error(error, ctx):
     if isinstance(error, commands.MissingRequiredArgument):
-        await bot.send_message(ctx.message.channel, "It seems you are missing required argument(s). Try again if you have all the arguments needed.") 
+        await ctx.send(ctx.message.channel, "It seems you are missing required argument(s). Try again if you have all the arguments needed.") 
+
+def is_not_bot():
+    async def predicate(ctx):
+        if ctx.author.bot == True:
+            return False
+        else:
+            return True
+    return commands.check(predicate)
 
 
-@bot.command(pass_context=True)
+@bot.command()
+@is_not_bot()
 async def look(ctx, user: discord.Member):
     """ Launch a lookup """
-    edit = await bot.say(':mag: Lookup in progress for: ' + str(user.id))
-    await bot.send_typing(ctx.message.author)
+    await ctx.send(':mag: Lookup in progress for: ' + str(user.id))
+    await ctx.trigger_typing()
     embed = discord.Embed(title="ID: " + str(user.id), color=0x44b57c)
     embed.set_author(name="Lookup of " + user.name + "#" + str(user.discriminator),icon_url=user.avatar_url) 
     embed.add_field(name="Created the:", value=user.created_at.strftime("%A, %B %d %Y @ %H:%M:%S %p"), inline=False)
@@ -46,10 +56,11 @@ async def look(ctx, user: discord.Member):
     else:
         embed.add_field(name="Is Bot ?:", value="No", inline=True)
     embed.set_footer(text="Superlookup version 1.0, by HeartsDo#0530")
-    await bot.edit_message(edit, ":white_check_mark: Done:")
-    await bot.say(embed=embed)
+    await ctx.edit(":white_check_mark: Done:")
+    await ctx.send(embed=embed)
 
-@bot.command(pass_context=True)
+@bot.command()
+@is_not_bot()
 async def info(ctx):
     """ Show Info of the bot """
     embed = discord.Embed(title="Version: 1", color=0x44b57c)
@@ -60,17 +71,19 @@ async def info(ctx):
     day, hour = divmod(hour, 24)
     week, day = divmod(day, 7)
     embed.add_field(name="Uptime:", value=str(int(week)) + " weeks, " + str(int(day)) + " days, " + str(int(hour)) + " hours, " + str(int(minute)) + " minutes, " + str(int(second)) + " seconds")
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
 
 bot.remove_command("help")
 
 @bot.command()
-async def help():
+@is_not_bot()
+async def help(ctx):
     embed = discord.Embed(name="Help", color=0x44b57c)
     embed.set_author(name="SuperLookup", icon_url="https://cdn.discordapp.com/avatars/451052111564767232/80479dce8b8091a66068946ac9100ba4.png")
     embed.add_field(name=".look <@mention or user id>", value="Lookup a user", inline=False)
     embed.add_field(name=".info", value="Gives a little info about the bot", inline=False)
     embed.add_field(name=".help", value="Gives this message", inline=False)
-    await bot.say(embed=embed)
+    await ctx.send(embed=embed)
+
 
 bot.run(token)
